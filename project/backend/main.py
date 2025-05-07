@@ -208,7 +208,7 @@ def collaborators():
     uni_data=requests.get("https://raw.githubusercontent.com/Hipo/university-domains-list/refs/heads/master/world_universities_and_domains.json")
 
   
-    """ for uni in uni_data.json():
+    """for uni in uni_data.json():
                 if(uni["country"]=="Spain"):
                     uni_item=University(
                         name=uni["name"],
@@ -217,7 +217,7 @@ def collaborators():
                         last_day=0
                     )
                     db.session.add(uni_item)
-                    db.session.commit()  """
+                    db.session.commit()"""  
     return render_template("collaborators.html")
 
 @app.route("/news")
