@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link rel="stylesheet" href="../static/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/4c3505cf43.js" crossorigin="anonymous"></script>
+    <script src="../static/script.js" defer=""></script>
+</head>
+<body>
+    <div id="header-2">
+        <nav class="navegator">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{url_for('news')}}">News</a>
+            <a href="{{ url_for('collaborators')}}">Collaborators</a>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('user') }}">Your account</a>  
+            {% else %}
+                <a href="{{ url_for('login') }}">Log In</a>
+                  
+            {% endif %}
+        </nav>
+        <h1>Check our alliances</h1>
+
+    </div>
+
+    <section class="sec-collab">
+        <article class="art-search-collab">
+            <h1>Search for your university</h1>
+            <h2>We collaborate with most higher-education institutions,<br> but make sure yours is one of them</h2>
+            <span><input type="text" id="input-uni" placeholder="Type the name of your university"><i class="fa-solid fa-magnifying-glass" id="lenses"></i></span>
+        </article>
+
+        <article class="art-uni-list">
+            <h1>Your results will appear here</h1>
+
+            <ul class="uni-list" id="uni-list">
+                    
+            </ul>
+        </article>
+    </section>
+
+
+    <footer>
+        <div class="contact">
+            <div class="contact-office">
+                <h1>Contacto</h1>
+                <div class="contact-info">
+                <h2>Paseo de la Castellana nº1</h2>
+                <p>+34 111 22 33 44</p>
+                <p>Horario de oficina: 08:30 - 19:00</p>
+                </div>
+
+            </div>
+            <div class="social">
+                <ul>
+                    <li>
+                        <img src="../static/logos/icons8-facebook-24.png" alt="">
+                    </li>
+                    <li>
+                        <img src="../static/logos/icons8-instagram-24.png" alt="">
+                    </li>
+                    <li>
+                        <img src="../static/logos/icons8-linkedin-24.png" alt="">
+                    </li>
+                    <li>
+                        <img src="../static/logos/icons8-tiktok-24.png" alt="">
+                    </li>
+                   
+                </ul>
+            </div>
+
+        </div>
+        <div class="disclaimer">
+        <span>© [2025] [GossipR Box]. All rights reserved. The content on this website is for informational purposes only and not a substitute for professional advice.</span>
+        </div>
+    </footer>
+</body>
+</html>

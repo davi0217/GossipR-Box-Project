@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link rel="stylesheet" href="../static/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/4c3505cf43.js" crossorigin="anonymous"></script>
+    <script src="../static/script.js" defer=""></script>
+</head>
+<body>
+    <div id="header-3">
+        <nav class="navegator">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{url_for('news')}}">News</a>
+            <a href="{{ url_for('collaborators')}}">Collaborators</a>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('user') }}">Your account</a>  
+            {% else %}
+                <a href="{{ url_for('login') }}">Log In</a>
+                  
+            {% endif %}
+        </nav>
+        <h1>Keep yourself updated</h1>
+
+    </div>
+
+    <section class="sec-news">
+        <article class="news-block" id="news-block">
+            <h1>Stay Informed: The Need for Awareness on Environmental Issues</h1>
+            <p>In today’s fast-changing world, it’s crucial to stay informed about environmental news. <br>From climate change to the conservation of natural resources, the issues impacting our planet are more pressing than ever. <br><br><strong>The environment is at the heart of our future,</strong> <br>and understanding the latest developments is essential to making informed decisions.</p>
+            
+        </article> 
+        <article class="news-filter">
+            <div class="news-filter-container">
+                <h1>Filter your search</h1>
+                <p>Choose the argument you would like to be informed about</p>
+                <select name="news-filter" id="news-filter">
+                    <option value="Recycling">Recycling</option>
+                    <option value="Environment">Environment</option>
+                    <option value="Science" selected>Science</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Nature">Nature</option>
+                </select>
+            </div>
+        </article>       
+    </section>
+
+
+    <footer>
+        <div class="contact">
+            <div class="contact-office">
+                <h1>Contacto</h1>
+                <div class="contact-info">
+                <h2>Paseo de la Castellana nº1</h2>
+                <p>+34 111 22 33 44</p>
+                <p>Horario de oficina: 08:30 - 19:00</p>
+                </div>
+
+            </div>
+            <div class="social">
+                <ul>
+                    <li>
+                        <img src="../static/logos/icons8-facebook-24.png" alt="">
+                    </li>
+                    <li>
+                        <img src="../static/logos/icons8-instagram-24.png" alt="">
+                    </li>
+                    <li>
+                        <img src="../static/logos/icons8-linkedin-24.png" alt="">
+                    </li>
+                    <li>
+                        <img src="../static/logos/icons8-tiktok-24.png" alt="">
+                    </li>
+                   
+                </ul>
+            </div>
+
+        </div>
+        <div class="disclaimer">
+        <span>© [2025] [GossipR Box]. All rights reserved. The content on this website is for informational purposes only and not a substitute for professional advice.</span>
+        </div>
+    </footer>
+</body>
+</html>

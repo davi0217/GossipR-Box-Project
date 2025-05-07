@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link rel="stylesheet" href="../static/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/4c3505cf43.js" crossorigin="anonymous"></script>
+    <script src="../static/script.js" defer=""></script>
+</head>
+<body>
+    <div id="header-5">
+        <nav class="navegator">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{url_for('news')}}">News</a>
+            <a href="{{ url_for('collaborators')}}">Collaborators</a>
+                   
+        </nav>
+        <h1>Welcome back, {{current_user.name}}</h1>
+
+
+    </div>
+
+    <section class="sec-user">
+        <article class="art-acc-info">
+            <div class="acc-info-container">
+                <i class="far fa-user" syle="color:white;"></i>
+                <h1>Your account details</h1>
+                <table class="acc-info-table">
+                    <tr>
+                        <td class="td-name">Name</td>
+                        <td>{{current_user.name}}</td>
+                    </tr>
+                    <tr>
+                        <td class="td-email">Email</td>
+                        <td>{{current_user.mail}}</td>
+                    </tr>
+                    <tr>
+                        <td class="td-telephone">Telephone</td>
+                        <td>{{current_user.telephone}}</td>
+                    </tr>
+                    <tr>
+                        <td class="td-university">University</td>
+                        <td>{{current_user.university}}</td>
+                    </tr>
+                    <tr id="tr-logout">
+                        <td id="td-logout"></td>
+                        <td id="td-logout">  <div id="log-out-container">
+                            <button id="log-out-btn">
+                                <a href="{{ url_for('logout') }}">Log out</a></button>
+                        </div></td>
+                    </tr>
+                </table>
+            </div>
+        </article>
+
+        <article class="art-acc-comments">
+            <div class="acc-comments-container">
+                <h1>Check your latest comments...</h1>
+
+                {% for comment in comments %}
+
+                    {%if comment.public==True %}
+
+                        <div class="comment-container" id="comment-container">
+                            <div class="profile-pic-container">
+                                <i class="far fa-user" syle="color:white;"></i>
+                            </div>
+                            <div class="comment" id="comment">
+                                <h2>{{comment.user}}</h2>
+                                <div class="comment-text"  id="comment-text">
+                                    <div class="comment-text-wrapper" style="display:none;">
+                                        <!-- {% if comment.liked==False %}
+                                        <a href="{{ url_for('like', com_id=comment.id) }}"><i class="fa-regular fa-heart" style="color: green;"></i></a>  
+                                        {% else %}
+                                        <i class="fa-solid fa-heart" style="color: #fd0d0d;"></i>
+                                        {% endif %}                                     
+                                        <p>{{comment.text}}</p> -->
+                                        {% if comment.liked==False %}
+                                        <p id="comment-id" style="display:none;">{{ comment.id }}</p>
+                                        <button id="heart" onclick="changeHeart()"><i class="fa-regular fa-heart" style="color: green;"></i></button>
+                                        {% else %}
+                                        <i class="fa-solid fa-heart" style="color: #fd0d0d;"></i>                 
+                                        {% endif %} 
+                                        <p>{{comment.text}}</p> 
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                {% endfor %}
+
+        </article>
+    </section>
+
+    <section class="sec-leave-comment">
+
+        <article class="art-leave-comment">
+            <h1> Don't be shy...leave your comment!</h1>
+            {% if error %}
+    <p class=error style="color:red; padding-top:20px; font-size:20px;"><strong>Error:</strong> {{ error }}
+  {% endif %}
+
+            <form action=" " method="post">
+                <table>
+                    <tr>
+                        <td>
+                            <label for="target">Target-user</label>
+
+                        </td>
+                        <td>
+                            <input type="text" name="target" id="target" list="users-list">
+                            <datalist name="users-list" id="users-list">
+                                {% for user in users %}
+                                    <option value="{{ user.name }}">{{ user.name }}</option>
+                                {% endfor %}
+
+                            </datalist><br>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                            <label for="message">Comment</label>
+                        </td>
+                        <td>
+                            <textarea name="message" id="message" rows="8" cols="60"></textarea><br>
+
+                        </td>
+                    </tr>
+                    <tr><td>
+
+                    </td>
+                    <td>
+                    <input type="submit" value="Send" id="submit">
+
+                </td></tr>
+            </table>
+            </form>
+        </article>
+    </section>
+
+    <section class="sec-uni-progress">
+        <article class="art-uni-progress">
+                <div class="uni-progress-img-container">
+                    <img src="static\images\pexels-cottonbro-3951625.jpg" alt="" class="uni-progress-img">
+                </div>
+                <div class="uni-progress-column">
+                    <h1>See the progress of {{current_user.university}} by {{date.weekday}}</h1>
+                    <h2>If by the end of the week your university gets a score higher than 80%, your comments will be sent to the target...</h2>
+                    <h3>And you will also receive your surprise comments!</h3>
+                    <h4>This week, your university has filled the container to a <span>{{date.progress}}%</span></h4>
+                    
+
+                </div>
+        </article>
+
+        <article class="art-skip-week">
+                <h1>You don't want to wait until Friday?</h1>
+
+            <h2>Since this page is a demo, you can just skip the process</h2>
+            <button ><a href="{{ url_for('publish') }}">Publish comments anyway</a></button>
+        </article>
+
+
+    </section>
+
+    <section class="sec-notifications">
+        <article class="art-notifications">
+            <h1>Your notifications</h1>
+            <div class="notifications-container">
+                <ul>
+                    {%for notif in notifs %}
+                        <li>
+                            <p id="notif-id" style="display:none;">{{ notif.id }}</p>
+                            <h2 id="notif-message">{{notif.sender}} liked your message: {{ notif.message }} </h2> <button onclick="deleteNotif()"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></button>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </article>
+
+
+    </section>
+
+   
+
+
+    <footer>
+        <div class="contact">
+            <div class="contact-office">
+                <h1>Contacto</h1>
+                <div class="contact-info">
+                <h2>Paseo de la Castellana nº1</h2>
+                <p>+34 111 22 33 44</p>
+                <p>Horario de oficina: 08:30 - 19:00</p>
+                </div>
+
+            </div>
+            <div class="social">
+                <ul>
+                    <li>
+                        <img src="../static/logos/icons8-facebook-24.png" alt="">
+                    </li>
+                    <li>
+                        <img src="../static/logos/icons8-instagram-24.png" alt="">
+                    </li>
+                    <li>
+                        <img src="../static/logos/icons8-linkedin-24.png" alt="">
+                    </li>
+                    <li>
+                        <img src="../static/logos/icons8-tiktok-24.png" alt="">
+                    </li>
+                   
+                </ul>
+            </div>
+
+        </div>
+        <div class="disclaimer">
+        <span>© [2025] [GossipR Box]. All rights reserved. The content on this website is for informational purposes only and not a substitute for professional advice.</span>
+        </div>
+    </footer>
+</body>
+</html>
