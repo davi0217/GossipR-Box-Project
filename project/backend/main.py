@@ -31,7 +31,7 @@ db =SQLAlchemy(model_class=Base)
 
 app=Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"]="sqlite:///students2.db"
+app.config["SQLALCHEMY_DATABASE_URI"]="sqlite:///students.db"
 login_manager.init_app(app)
 
 app.secret_key="bnbn"
@@ -91,6 +91,25 @@ def load_user(user_id):
 
 @app.route("/")
 def home():
+
+    uni_data=requests.get("https://raw.githubusercontent.com/Hipo/university-domains-list/refs/heads/master/world_universities_and_domains.json")
+
+  
+    try: 
+
+        result=db.session.execute(db.session.select(University)).scalar()
+    except:
+        for uni in uni_data.json():
+                if(uni["country"]=="Spain"):
+                    uni_item=University(
+                        name=uni["name"],
+                        url=uni["web_pages"][0],
+                        progress=0,
+                        last_day=0
+                    )
+                    db.session.add(uni_item)
+                    db.session.commit()
+    
 
     unis=db.session.execute(db.select(University)).scalars()
     for uni_toChange in unis:
@@ -205,19 +224,7 @@ def register():
 def collaborators():
 
     
-    uni_data=requests.get("https://raw.githubusercontent.com/Hipo/university-domains-list/refs/heads/master/world_universities_and_domains.json")
-
-  
-    """for uni in uni_data.json():
-                if(uni["country"]=="Spain"):
-                    uni_item=University(
-                        name=uni["name"],
-                        url=uni["web_pages"][0],
-                        progress=0,
-                        last_day=0
-                    )
-                    db.session.add(uni_item)
-                    db.session.commit()"""  
+      
     return render_template("collaborators.html")
 
 @app.route("/news")
